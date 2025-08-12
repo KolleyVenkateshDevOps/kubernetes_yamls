@@ -1,21 +1,10 @@
-apiVersion: apps/v1
-kind: Deployment
+apiVersion: v1
+kind: Pod
 metadata:
-  labels:
-    app: myapp01
-  name: myapp01
+  name: nginx
 spec:
-  replicas: 3
-  selector:
-    matchLabels:
-      app: myapp01
-  template:
-    metadata:
-      labels:
-        app: myapp01
-    spec:
-      containers:
-      - image: sreeharshav/rollingupdate:v5
-        name: rollingupdate
-      nodeSelector:
-        env: prod
+  containers:
+  - name: nginx
+    image: nginx:1.14.2
+    ports:
+    - containerPort: 80
