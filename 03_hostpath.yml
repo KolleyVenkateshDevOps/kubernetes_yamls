@@ -78,4 +78,4 @@ spec:
         hostPath:
           path: /dev/disk
 
-      # kubectl port-forward pods/podname --address 0.0.0.0 8080:8080
+      # kubectl port-forward  pods/cadvisor-qpz4d --address 0.0.0.0 8080:8080 Then need to access management server
