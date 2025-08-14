@@ -24,3 +24,50 @@ spec:
 # kubectl logs emptydir-multi -c reader
 # Expected output:
 # Hello from writer
+
+###################################################################################################################################
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mysql
+spec:
+  selector:
+    matchLabels:
+      app: mysql
+  template:
+    metadata:
+      labels:
+        app: mysql
+    spec:
+      containers:
+      - image: sreeharshav/utils:latest
+        name: utils
+        volumeMounts:
+        - name: sqldata
+          mountPath: /sqldata
+      - image: mysql:8.0
+        name: mysql
+        env:
+        - name: MYSQL_ROOT_PASSWORD
+          value: "India@123456"
+        ports:
+        - containerPort: 3306
+          name: mysql
+        volumeMounts:
+        - name: sqldata
+          mountPath: /var/lib/mysql
+      volumes:
+        - name: sqldata
+          emptyDir: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mysql
+spec:
+  ports:
+  - port: 3306
+  selector:
+    app: mysql
+
+    # kubectl exec -it 
